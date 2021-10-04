@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: oms-product
+  name: oms-tracking
   namespace: app
   labels:
-    app: oms-product
+    app: oms-tracking
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: oms-product
+      app: oms-tracking
   template:
     metadata:
       labels:
-        app: oms-product
+        app: oms-tracking
     spec:
       containers:
-      - name: oms-product
-        image: manishsrivastavaggn/oms-products:changeMePlease
+      - name: oms-tracking
+        image: manishsrivastavaggn/oms-tracking:changeMePlease
         ports:
         - containerPort: 8080
         

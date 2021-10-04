@@ -18,7 +18,7 @@ pipeline {
            stage('Checkout the code') {
             steps{
                 sh(script: """
-                    git clone https://github.com/manishsrivastava78/oms-products.git
+                    git clone https://github.com/manishsrivastava78/oms-tracking.git
                 """, returnStdout: true) 
             }
         }
@@ -27,7 +27,7 @@ pipeline {
             steps {
 			      sh script: '''
                 #!/bin/bash
-                cd $WORKSPACE/oms-products/
+                cd $WORKSPACE/oms-tracking/
                 export M2_HOME=/usr/share/maven
                 export PATH=$PATH:$M2_HOME/bin
                 mvn --version
@@ -40,8 +40,8 @@ pipeline {
             steps{
                 sh script: '''
                 #!/bin/bash
-                cd $WORKSPACE/oms-products/
-                docker build -t manishsrivastavaggn/oms-products:${BUILD_NUMBER} .
+                cd $WORKSPACE/oms-tracking/
+                docker build -t manishsrivastavaggn/oms-tracking:${BUILD_NUMBER} .
                 '''
             }
         }
@@ -57,7 +57,7 @@ pipeline {
              stage('Push docker image') {
             steps{
                 sh(script: """
-                    docker push manishsrivastavaggn/oms-products:${BUILD_NUMBER}
+                    docker push manishsrivastavaggn/oms-tracking:${BUILD_NUMBER}
                 """)
             }
         }
@@ -66,7 +66,7 @@ pipeline {
 				steps{
 					sh script: '''
 						#!/bin/bash
-						cd $WORKSPACE/oms-products/
+						cd $WORKSPACE/oms-tracking/
 					#get kubectl for this demo
 					curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
 					chmod +x ./kubectl
