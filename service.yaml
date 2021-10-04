@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: oms-tracking-svc
-  namespace: app
+  namespace: order-domain
   labels:
     app: oms-product
 spec:
