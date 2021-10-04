@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oms-product
+  namespace: app
+  labels:
+    app: oms-product
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oms-product
+  template:
+    metadata:
+      labels:
+        app: oms-product
+    spec:
+      containers:
+      - name: oms-product
+        image: manishsrivastavaggn/oms-products:changeMePlease
+        ports:
+        - containerPort: 8080
+        
