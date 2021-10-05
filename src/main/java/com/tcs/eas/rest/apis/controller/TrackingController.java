@@ -31,6 +31,7 @@ import com.tcs.eas.rest.apis.model.MailData;
 import com.tcs.eas.rest.apis.model.Order;
 import com.tcs.eas.rest.apis.model.Product;
 import com.tcs.eas.rest.apis.model.Tracking;
+import com.tcs.eas.rest.apis.model.TrackingStatus;
 import com.tcs.eas.rest.apis.utility.Utility;
 
 /**
@@ -105,7 +106,7 @@ public class TrackingController {
 	}
 
 	@PutMapping("/trackings")
-	public ResponseEntity<Tracking> updateTracking(@Valid @RequestBody Tracking tracking,
+	public ResponseEntity<Tracking> updateTracking(@Valid @RequestBody TrackingStatus tracking,
 			@RequestHeader Map<String, String> headers) {
 		Tracking searchedTracking = trackingDaoService.getTrackingByTrackingnumber(tracking.getTrackingnumber());
 		searchedTracking.setStatus(tracking.getStatus());
