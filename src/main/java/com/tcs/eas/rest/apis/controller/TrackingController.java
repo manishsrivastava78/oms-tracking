@@ -2,6 +2,7 @@ package com.tcs.eas.rest.apis.controller;
 
 import java.net.URI;
 import java.sql.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -103,6 +104,13 @@ public class TrackingController {
 		}
 		loggingService.writeProcessLog("GET", "trackings", "getTracking by tracking numver", tracking);
 		return ResponseEntity.ok().headers(Utility.getCustomResponseHeaders(headers)).body(tracking);
+	}
+	
+	@GetMapping("/trackings")
+	public ResponseEntity<List<Tracking>> getTrackings(@RequestHeader Map<String, String> headers) {
+		List<Tracking> tracking = trackingDaoService.findAll();
+		loggingService.writeProcessLog("GET", "trackings", "getTrackings", tracking);
+		return  ResponseEntity.ok().headers(Utility.getCustomResponseHeaders(headers)).body(tracking);
 	}
 
 	@PutMapping("/trackings")

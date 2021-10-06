@@ -1,5 +1,7 @@
 package com.tcs.eas.rest.apis.db;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +32,13 @@ public class TrackingDaoService {
 		return tracking;
 	}
 
-	
+	/**
+	 * 
+	 * @return
+	 */
+	public List<Tracking> findAll(){
+		return trackingRepository.findAll();
+	}
 
 	/**
 	 * 
