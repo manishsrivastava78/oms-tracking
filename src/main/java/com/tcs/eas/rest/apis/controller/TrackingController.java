@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
+import javax.ws.rs.QueryParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -107,8 +108,13 @@ public class TrackingController {
 	}
 	
 	@GetMapping("/trackings")
-	public ResponseEntity<List<Tracking>> getTrackings(@RequestHeader Map<String, String> headers) {
-		List<Tracking> tracking = trackingDaoService.findAll();
+	public ResponseEntity<List<Tracking>> getTrackings(@QueryParam("customerid") Integer customerid, @RequestHeader Map<String, String> headers) {
+		List<Tracking> tracking = null;
+		if(customerid !=null)  {
+			tracking = trackingDaoService.findAllByCustomerid(customerid);
+		}else {
+			tracking = trackingDaoService.findAll();
+		}
 		loggingService.writeProcessLog("GET", "trackings", "getTrackings", tracking);
 		return  ResponseEntity.ok().headers(Utility.getCustomResponseHeaders(headers)).body(tracking);
 	}

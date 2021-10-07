@@ -48,4 +48,13 @@ public class TrackingDaoService {
 	public Tracking getTrackingByTrackingnumber(String trackingNumber) {
 		return trackingRepository.getTrackingByTrackingnumber(trackingNumber);
 	}
+	
+	/**
+	 * 
+	 * @param customerId
+	 * @return
+	 */
+	public List<Tracking> findAllByCustomerid(int customerId){
+		return trackingRepository.findAllByCustomerid(customerId);
+	}
 }
