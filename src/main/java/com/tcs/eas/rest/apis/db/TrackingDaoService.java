@@ -57,4 +57,23 @@ public class TrackingDaoService {
 	public List<Tracking> findAllByCustomerid(int customerId){
 		return trackingRepository.findAllByCustomerid(customerId);
 	}
+	
+	/**
+	 * 
+	 * @param status
+	 * @return
+	 */
+	public List<Tracking> findAllByStatus(int status){
+		return trackingRepository.findAllByStatus(status);
+	}
+
+	/**
+	 * 
+	 * @param customerId
+	 * @param status
+	 * @return
+	 */
+	public List<Tracking> findAllByCustomeridAndStatus(int customerId,int status){
+		return trackingRepository.findAllByCustomeridAndStatus(customerId,status);
+	}
 }

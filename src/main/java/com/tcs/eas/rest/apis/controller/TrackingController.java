@@ -91,7 +91,7 @@ public class TrackingController {
 		loggingService.writeProcessLog("POST", "trackings", "createTracking", tracking);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{trackingid}")
 				.buildAndExpand(savedTracking.getTrackingid()).toUri();
-		//sendMailMessage(savedTracking);
+		// sendMailMessage(savedTracking);
 		return ResponseEntity.created(location).headers(Utility.getCustomResponseHeaders(headers)).build();
 	}
 
@@ -106,17 +106,40 @@ public class TrackingController {
 		loggingService.writeProcessLog("GET", "trackings", "getTracking by tracking numver", tracking);
 		return ResponseEntity.ok().headers(Utility.getCustomResponseHeaders(headers)).body(tracking);
 	}
-	
+
 	@GetMapping("/trackings")
-	public ResponseEntity<List<Tracking>> getTrackings(@QueryParam("customerid") Integer customerid, @RequestHeader Map<String, String> headers) {
+	public ResponseEntity<List<Tracking>> getTrackings(@QueryParam("customerid") Integer customerid,
+			@QueryParam("status") Integer status, @RequestHeader Map<String, String> headers) {
 		List<Tracking> tracking = null;
-		if(customerid !=null)  {
+		/*
+		 * if(customerid !=null && status == null) { tracking =
+		 * trackingDaoService.findAllByCustomerid(customerid); }else { tracking =
+		 * trackingDaoService.findAll(); }
+		 */
+
+		if (customerid != null && status == null) {
 			tracking = trackingDaoService.findAllByCustomerid(customerid);
-		}else {
+		} else if (customerid == null && status != null) {
+			tracking = trackingDaoService.findAllByStatus(status);
+		} else if (customerid != null && status != null) {
+			tracking = trackingDaoService.findAllByCustomeridAndStatus(customerid, status);
+		} else {
 			tracking = trackingDaoService.findAll();
 		}
+		/**
+		 * if(customerid != null && status == null) { tracking =
+		 * trackingDaoService.findAllByCustomerid(customerid); }else if(customerid ==
+		 * null && status != null) { tracking =
+		 * trackingDaoService.findAllByStatus(status); }else if (customerid != null &&
+		 * status != null) { tracking =
+		 * trackingDaoService.findAllByCustomeridAndStatus(customerid,status); }else{
+		 * tracking = trackingDaoService.findAll(); }
+		 * 
+		 * return ResponseEntity.ok().body(bookDaoService.findAll());
+		 */
+
 		loggingService.writeProcessLog("GET", "trackings", "getTrackings", tracking);
-		return  ResponseEntity.ok().headers(Utility.getCustomResponseHeaders(headers)).body(tracking);
+		return ResponseEntity.ok().headers(Utility.getCustomResponseHeaders(headers)).body(tracking);
 	}
 
 	@PutMapping("/trackings")
@@ -223,17 +246,17 @@ public class TrackingController {
 		} catch (Exception e) {
 			loggingService.logError(e.getMessage());
 		}
-		
+
 		/**
 		 * dummy order
 		 */
-		if(order == null) {
+		if (order == null) {
 			order = new Order();
 			order.setOrderid(orderId);
 			order.setDop(new Date(System.currentTimeMillis()));
-			
+
 		}
-		
+
 		return order;
 	}
 

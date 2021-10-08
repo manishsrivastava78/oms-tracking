@@ -26,4 +26,18 @@ public interface TrackingRepository extends JpaRepository<Tracking,Integer>{
 	 */
 	public List<Tracking> findAllByCustomerid(int customerId);
 	
+	/**
+	 * 
+	 * @param status
+	 * @return
+	 */
+	public List<Tracking> findAllByStatus(int status);
+
+	/**
+	 * 
+	 * @param customerId
+	 * @param status
+	 * @return
+	 */
+	public List<Tracking> findAllByCustomeridAndStatus(int customerId,int status);
 }
